@@ -94,24 +94,42 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .site-header .inner{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px 22px;
 }
 .site-header__logo{width:150px;flex:none;}
 .site-header__link{display:inline-flex;}
 .site-header__link:focus-visible{outline:2px solid #fff;outline-offset:4px;}
-.site-header__right{display:flex;align-items:center;gap:18px;}
+.site-header__right{
+  display:flex;align-items:center;flex-wrap:wrap;
+  justify-content:center;gap:8px 20px;
+}
 .site-header__phone{
   display:inline-flex;align-items:center;gap:8px;
   color:#fff;font-family:var(--ff);font-weight:400;font-size:15px;white-space:nowrap;
 }
 .site-header__phone svg{width:16px;height:16px;fill:#fff;flex:none;}
 .site-header__phone:hover{color:rgba(255,255,255,.72);}
-.menu-btn{
-  background:none;border:0;padding:10px 0;cursor:pointer;
-  display:flex;flex-direction:column;gap:9px;width:40px;flex:none;
+.site-nav{
+  display:flex;align-items:center;flex-wrap:wrap;
+  justify-content:center;gap:8px 20px;
 }
-.menu-btn span{display:block;height:2px;width:100%;background:#fff;}
+.site-nav__link{
+  color:#fff;font-family:var(--ff);font-weight:500;font-size:14px;letter-spacing:.01em;
+  padding:4px 0;
+  transition:opacity .2s ease;
+}
+.site-nav__link:hover{opacity:.72;}
+.site-nav__cta{
+  display:inline-flex;align-items:center;
+  background:#fff;color:var(--red);
+  font-family:var(--ff);font-weight:600;font-size:14px;letter-spacing:.01em;
+  padding:9px 18px;border-radius:999px;
+  transition:transform .2s ease, color .2s ease;
+}
+.site-nav__cta:hover{transform:translateY(-1px);color:var(--red-dark);}
+.site-nav__link:focus-visible,.site-nav__cta:focus-visible{outline:2px solid #fff;outline-offset:3px;}
 
 /* hero --------------------------------------------------------- */
 .hero{
@@ -522,6 +540,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
   /* header + hero */
   .site-header__logo{width:176px;}
+  .site-header .inner{justify-content:space-between;flex-wrap:nowrap;}
+  .site-header__right{flex-wrap:nowrap;}
   .hero{padding:132px var(--pad-x) 130px;}
   .hero h1{font-size:50px;line-height:1.18;margin-bottom:24px;max-width:840px;}
   .hero__lead{font-size:17px;margin-bottom:40px;}
