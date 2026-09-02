@@ -1,0 +1,10 @@
+# Reference screenshots used during design (not part of the site)
+screenshot.png
+www.joslynconstructions.co.uk_.png
+www.redoctopusconstruction.com_home_.png
+temporary screenshots/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+node_modules/
