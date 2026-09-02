@@ -17,7 +17,7 @@
   <header class="site-header">
     <div class="inner">
       <a class="site-header__link" href="index.html" aria-label="Red Octopus Construction — home">
-        <img class="site-header__logo" src="brand_assets/red_octopus_logo_footer.png" alt="Red Octopus Construction" />
+        <img class="site-header__logo" src="brand_assets/red_octopus_logo_alt_alt.png" alt="Red Octopus Construction" />
       </a>
       <div class="site-header__right">
         <a class="site-header__phone" href="tel:07861147495">
@@ -334,26 +334,32 @@
       <h2 class="h2 h2--rule">Request a Survey or Quote</h2>
       <p class="quote__lead">If you have a project in mind, get in touch using the form below and we'll arrange a visit.</p>
 
-      <form class="qform" action="mailto:paul@redoctopusconstruction.com" method="post" enctype="text/plain">
+      <form class="qform" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="79427e1c-acb5-4f73-a1e9-4b21c4587b14" />
+        <input type="hidden" name="subject" value="New quote request from redoctopusconstruction.com" />
+        <input type="hidden" name="from_name" value="Red Octopus Construction website" />
+        <input type="hidden" name="name" value="Website enquiry" />
+        <input type="checkbox" name="botcheck" class="qform__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
         <div class="row row--wide">
           <div class="field">
             <label for="first">First Name*</label>
-            <input type="text" id="first" name="First Name" placeholder="First name" required />
+            <input type="text" id="first" name="First Name" placeholder="First name" autocomplete="given-name" required />
           </div>
           <div class="field">
             <label for="last">Last Name*</label>
-            <input type="text" id="last" name="Last Name" placeholder="Last name" required />
+            <input type="text" id="last" name="Last Name" placeholder="Last name" autocomplete="family-name" required />
           </div>
         </div>
 
         <div class="row--wide">
           <div class="field">
             <label for="email">Email Address*</label>
-            <input type="email" id="email" name="Email Address" placeholder="you@example.com" required />
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
           </div>
           <div class="field">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="Phone Number" placeholder="07000 000000" />
+            <input type="tel" id="phone" name="Phone Number" placeholder="07000 000000" autocomplete="tel" />
           </div>
         </div>
 
@@ -392,7 +398,13 @@
           <textarea id="help" name="How Can We Help" placeholder="Tell us a bit about the project, timescales and anything else we should know."></textarea>
         </div>
 
+        <label class="qform__consent">
+          <input type="checkbox" name="Consent given" value="Yes" required />
+          <span>I'm happy for Red Octopus Construction to use these details to respond to my enquiry, as set out in the <a href="privacy.html">privacy policy</a>.</span>
+        </label>
+
         <button class="btn btn--primary" type="submit">Send My Request</button>
+        <p class="qform__status" role="status" aria-live="polite" hidden></p>
         <p class="qform__note">Prefer to talk? Call us on <a href="tel:07861147495">07861&nbsp;147495</a> or email <a href="mailto:paul@redoctopusconstruction.com">paul@redoctopusconstruction.com</a>.</p>
       </form>
     </div>
@@ -436,7 +448,7 @@
 
       <p class="site-footer__legal">
         &copy; 2026 Red Octopus Construction. All rights reserved. Website design by MAW Digital Marketing<br />
-        <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms &amp; Conditions</a>
+        <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms &amp; Conditions</a>
       </p>
     </div>
   </footer>
@@ -519,6 +531,51 @@
       });
     }, { threshold: 0.6 });
     nums.forEach(function(el){ stats.observe(el); });
+  })();
+
+  /* quote form: AJAX submit to Web3Forms with inline status */
+  (function(){
+    var form = document.querySelector('.qform');
+    if(!form) return;
+    var status = form.querySelector('.qform__status');
+    var btn = form.querySelector('button[type="submit"]');
+
+    function setStatus(msg, state){
+      status.textContent = msg;
+      status.className = 'qform__status is-' + state;
+      status.hidden = false;
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(form.querySelector('[name="botcheck"]').checked) return; // honeypot tripped
+      var nameField = form.querySelector('[name="name"]');
+      var first = (form.querySelector('#first') || {}).value || '';
+      var last = (form.querySelector('#last') || {}).value || '';
+      if(nameField) nameField.value = (first + ' ' + last).trim() || 'Website enquiry';
+
+      setStatus('Sending your request…', 'pending');
+      btn.disabled = true;
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(data.success){
+          form.reset();
+          setStatus('Thanks — your request has been sent. We’ll be in touch shortly.', 'ok');
+        } else {
+          setStatus((data.message || 'Something went wrong.') + ' Please call us on 07861 147495.', 'err');
+        }
+      })
+      .catch(function(){
+        setStatus('Network problem — please try again, or call us on 07861 147495.', 'err');
+      })
+      .then(function(){ btn.disabled = false; });
+    });
   })();
 </script>
 </body>
