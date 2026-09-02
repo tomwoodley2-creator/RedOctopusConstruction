@@ -258,24 +258,45 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .svc:hover .svc__head h3{color:var(--red);}
 .svc__text{margin:0;padding-left:62px;font-size:14px;font-weight:300;line-height:1.7;color:var(--ink);}
 
-/* centre figure */
+/* centre panel — years of experience */
 .about__figure{position:relative;isolation:isolate;order:-1;align-self:center;width:100%;max-width:320px;margin:0 auto 8px;}
-.about__frame{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(68,68,68,.45);}
-.about__frame img{width:100%;height:380px;object-fit:cover;}
-.about__figovl{
-  position:absolute;inset:0;
-  background:linear-gradient(to top, rgba(58,61,58,.6), rgba(58,61,58,0) 55%);
-  display:flex;align-items:flex-end;justify-content:center;padding:18px;
+.about__yrs{
+  position:relative;
+  border-radius:8px;
+  overflow:hidden;
+  padding:42px 30px 34px;
+  color:#fff;
+  background:
+    radial-gradient(130% 90% at 18% 0%, rgba(166,21,28,.42), transparent 62%),
+    linear-gradient(158deg, #2a1113 0%, #150a0b 72%);
+  box-shadow:0 30px 60px -30px rgba(68,68,68,.45);
 }
-.about__figbtn{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#fff;color:var(--red);
-  font-family:var(--ff);font-weight:500;font-size:13px;
-  padding:11px 18px;border-radius:999px;
-  transition:transform .25s ease, color .25s ease;
+.about__yrs-num{
+  display:block;
+  font-family:var(--ff);
+  font-weight:700;
+  font-size:clamp(72px, 12vw, 92px);
+  line-height:.9;
+  letter-spacing:-.03em;
+  color:#d0454d;
+  background:linear-gradient(178deg, #e88b90 0%, #c23c43 46%, #8c1117 100%);
 }
-.about__figbtn svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
-.about__figbtn:hover{transform:translateY(-2px);color:var(--red-dark);}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .about__yrs-num{-webkit-background-clip:text;background-clip:text;color:transparent;}
+}
+.about__yrs-num sup{font-size:.52em;font-weight:600;top:-.62em;margin-left:.02em;}
+.about__yrs-label{
+  margin:16px 0 0;
+  max-width:17ch;
+  font-size:15px;font-weight:300;line-height:1.55;
+  color:rgba(255,255,255,.9);
+}
+.about__yrs-by{
+  margin:22px 0 0;padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.16);
+  font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--sage);
+}
 .about__figframe{position:absolute;inset:-12px;border:3px solid var(--sage);border-radius:8px;}
 .about__accent{position:absolute;border-radius:50%;pointer-events:none;}
 .about__accent--1{width:70px;height:70px;background:rgba(166,21,28,.10);top:-26px;right:-28px;}
